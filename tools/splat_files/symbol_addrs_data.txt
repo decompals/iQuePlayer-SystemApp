@@ -1,0 +1,237 @@
+
+// asm/data/15490.data.s
+
+D_80016490 = 0x80016490;
+D_800164A0 = 0x800164A0; // dont_allow_addend:True
+D_800178A0 = 0x800178A0;
+D_800178B0 = 0x800178B0; // dont_allow_addend:True
+
+
+// asm/data/libultra/vi/vimgr.data.s
+
+__osViDevMgr = 0x800191A0; // type:label size:0x1C
+__additional_scanline = 0x800191BC; // type:u32 size:4
+
+
+// asm/data/libultra/vi/vi.data.s
+
+vi = 0x80019490; // type:label size:0x60
+__osViCurr = 0x800194F0; // type:label size:4
+__osViNext = 0x800194F4; // type:label size:4
+
+
+// asm/data/libultra/host/writehost.data.s
+
+writeHostInitialized = 0x80019150; // type:label size:4
+
+
+// asm/data/libultra/host/rdbsend.data.s
+
+__osRdb_Usb_Active = 0x80019470; // type:label size:4
+
+
+// asm/data/libultra/host/readhost.data.s
+
+readHostInitialized = 0x80019140; // type:label size:4
+
+
+// asm/data/libultra/host/initrdb.data.s
+
+__osRdb_IP6_Empty = 0x80019480; // type:label size:4
+
+
+// asm/data/libultra/bb/fs/fsinit.data.s
+
+__osBbFsAutoSync = 0x80019300; // type:label size:1
+
+
+// asm/data/libultra/bb/usb/rdb_slave.data.s
+
+DevDesc = 0x80019340; // type:label size:0x14
+ConfigDesc = 0x80019354; // type:label size:0x20
+USB_STR_0 = 0x80019374; // type:label size:0x4
+USB_STR_1 = 0x80019378; // type:label size:0x14
+USB_STR_2 = 0x8001938C; // type:label size:0x18
+USB_STR_n = 0x800193A4; // type:label size:0x22
+cur_inbuf = 0x800193C8; // type:label size:4
+inbuf = 0x800193CC; // type:label size:0x10
+rdbs_dev_funcs = 0x800193DC; // type:label size:0x18
+
+
+// asm/data/libultra/bb/usb/usbdevice.data.s
+
+USB_IF_ALT = 0x80019330; // type:label size:4
+
+
+// asm/data/libultra/bb/usb/usbhw.data.s
+
+_usb_ctlr_state = 0x80019310; // type:label size:0x10
+save_im_level = 0x80019320; // type:label size:4
+msec_count = 0x80019324; // type:label size:4
+
+
+// asm/data/libultra/bb/card/cardinit.data.s
+
+__osBbCardChange = 0x800192F0; // type:label size:1
+
+
+// asm/data/libultra/pi/pimgr.data.s
+
+__osPiDevMgr = 0x800192A0; // type:label size:0x1C
+__osPiTable = 0x800192BC; // type:label size:4
+__osCurrentHandle = 0x800192C0; // type:label size:8
+
+
+// asm/data/libultra/pi/cartrominit.data.s
+
+first = 0x800192D0; // type:label size:4
+
+
+// asm/data/libultra/thread/thread.data.s
+
+__osThreadTail = 0x80019170; // type:label size:8
+__osRunQueue = 0x80019178; // type:label size:4
+__osActiveQueue = 0x8001917C; // type:label size:4
+__osRunningThread = 0x80019180; // type:label size:4
+__osFaultedThread = 0x80019184; // type:label size:4
+
+
+// asm/data/libultra/system/initialize_kmc.data.s
+
+stat = 0x80019440; // type:label size:4
+wport = 0x80019444; // type:label size:4
+column = 0x80019448; // type:label size:4
+
+
+// asm/data/libultra/system/initialize.data.s
+
+__osBbLibVersion = 0x80019400; // type:label size:27
+osClockRate = 0x80019420; // type:label size:8
+osViClock = 0x80019428; // type:label size:4
+__osShutdown = 0x8001942C; // type:label size:4
+__osShutdownTime = 0x80019430; // type:label size:4
+__OSGlobalIntMask = 0x80019434; // type:label size:4
+__printfunc = 0x80019438; // type:label size:4
+
+
+// asm/data/libultra/exception/exceptasm.data.s
+
+__osHwIntTable = 0x80019260; // type:label size:0x28
+__osPiIntTable = 0x80019288; // type:label size:8
+__osRdb_DbgRead_Ct = 0x80019290; // type:label size:4
+__osRdb_Mesg = 0x80019294; // type:label size:4
+__os_Kdebug_Pkt = 0x80019298; // type:label size:4
+__osPreviousThread = 0x8001929C; // type:label size:4
+
+
+// asm/data/libultra/libz/gzip.data.s
+
+gzip_mem_next = 0x800195F0; // type:label size:4
+
+
+// asm/data/libultra/message/seteventmesg.data.s
+
+__osPreNMI = 0x80019160; // type:label size:4
+
+
+// asm/data/libultra/time/timerintr.data.s
+
+__osTimerList = 0x80019190; // type:label size:4
+
+
+// asm/data/libultra/si/piacs.data.s
+
+__osPiAccessQueueEnabled = 0x800192E0; // type:label size:4
+
+
+// asm/data/libultra/debug/kdebugserver.data.s
+
+numChars = 0x80019450; // type:label size:4
+
+
+// asm/data/libultra/debug/threadprofile.data.s
+
+__osThprofFlag = 0x80019460; // type:label size:4
+__osThprofFunc = 0x80019464; // type:label size:4
+
+
+// asm/data/libultra/vimodes/vimodentsclan1.data.s
+
+osViModeNtscLan1 = 0x80019500; // type:label size:0x50
+
+
+// asm/data/libultra/vimodes/vimodempallan1.data.s
+
+osViModeMpalLan1 = 0x800195A0; // type:label size:0x50
+
+
+// asm/data/libultra/vimodes/vimodepallan1.data.s
+
+osViModePalLan1 = 0x80019550; // type:label size:0x50
+
+
+// asm/data/libultra/vimodes/vimodentschpf1.data.s
+
+osViModeNtscHpf1 = 0x80019210; // type:label size:0x50
+
+
+// asm/data/libultra/vimodes/vimodentsclpn1.data.s
+
+osViModeNtscLpn1 = 0x800191C0; // type:label size:0x50
+
+
+// asm/data/sa1/1F40.data.s
+
+D_800163B0 = 0x800163B0; // type:label size:17
+D_800163C4 = 0x800163C4; // type:label size:4
+D_800163C8 = 0x800163C8; // type:label size:4
+
+
+// asm/data/sa1/1050.data.s
+
+D_80016390 = 0x80016390; // type:label size:4
+D_80016394 = 0x80016394; // type:label size:4
+D_80016398 = 0x80016398; // type:label size:4
+D_8001639C = 0x8001639C; // type:label size:4
+D_800163A0 = 0x800163A0; // type:label size:4
+
+
+// asm/data/sa1/2C20.data.s
+
+D_800163D0 = 0x800163D0; // type:label size:0x10
+D_800163E0 = 0x800163E0; // type:label size:0x28
+D_80016408 = 0x80016408; // type:label size:0x88
+
+// asm/data/rsp/gspFast3D.data.s
+
+gspFast3DTextStart = 0x80014F90; // type:label name_end:gspFast3DTextEnd
+
+
+// asm/data/rsp/gspFast3D.rodata.s
+
+gspFast3DDataStart = 0x8001A630; // type:label name_end:gspFast3DDataEnd
+
+
+// asm/data/rsp/rspboot.data.s
+
+rspbootTextStart = 0x80014EC0; // type:label name_end:rspbootTextEnd
+
+
+// various rodata
+
+lenfix = 0x80019890; // type:label size:0x800
+distfix = 0x8001A090; // type:label size:0x80
+order = 0x8001A110; // type:label size:26
+D_8001A138 = 0x8001A138; // type:asciz
+D_8001A49C = 0x8001A49C; // type:asciz
+__osBbCardConfig = 0x800197A0; // type:label size:0x30
+USB_STRING_DESC = 0x80019820; // type:label size:0x30
+__osIntOffTable = 0x80019690; // type:label size:0x20
+__osIntTable = 0x800196B0; // type:jtbl size:0x24
+__osCauseTable_pt = 0x800196D4; // type:label size:0x2C
+__osRcpImTable = 0x80019700; // type:label size:0x80
+lbase = 0x8001A310; // type:label size:0x40
+lext = 0x8001A350; // type:label size:0x40
+dbase = 0x8001A390; // type:label size:0x40
+dext = 0x8001A3D0; // type:label size:0x40
+__clz_tab = 0x8001A530; // type:label size:0x100

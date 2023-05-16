@@ -1,0 +1,32 @@
+// backwards offsets
+rom:0x12E34 symbol:lbase reloc:MIPS_HI16 addend:-0x202
+rom:0x12E38 symbol:lbase reloc:MIPS_LO16 addend:-0x202
+rom:0x12E3C symbol:lext reloc:MIPS_HI16 addend:-0x202
+rom:0x12E40 symbol:lext reloc:MIPS_LO16 addend:-0x202
+// thread stacks
+rom:0x6874 symbol:piThreadStack reloc:MIPS_HI16 addend:0x1000
+rom:0x6878 symbol:piThreadStack reloc:MIPS_LO16 addend:0x1000
+rom:0x68C0 symbol:ramromThreadStack reloc:MIPS_HI16 addend:0x400
+rom:0x68C4 symbol:ramromThreadStack reloc:MIPS_LO16 addend:0x400
+rom:0x4F48 symbol:viThreadStack reloc:MIPS_HI16 addend:0x1000
+rom:0x4F4C symbol:viThreadStack reloc:MIPS_LO16 addend:0x1000
+rom:0x1424 symbol:D_8002B458 reloc:MIPS_HI16 addend:0x8000
+rom:0x1428 symbol:D_8002B458 reloc:MIPS_LO16 addend:0x8000
+rom:0x1188 symbol:D_8001B0F8 reloc:MIPS_HI16 addend:0x8000
+rom:0x118C symbol:D_8001B0F8 reloc:MIPS_LO16 addend:0x8000
+rom:0x12C0 symbol:D_800232A8 reloc:MIPS_HI16 addend:0x8000
+rom:0x12C4 symbol:D_800232A8 reloc:MIPS_LO16 addend:0x8000
+rom:0x2028 symbol:D_80047F60 reloc:MIPS_HI16 addend:0x8000
+rom:0x202C symbol:D_80047F60 reloc:MIPS_LO16 addend:0x8000
+// entrypoint
+rom:0x1028 symbol:bootStack reloc:MIPS_HI16 addend:0x8000
+rom:0x102C symbol:bootStack reloc:MIPS_LO16 addend:0x8000
+rom:0x1030 symbol:func_80002114 reloc:MIPS_HI16 addend:0
+rom:0x1034 symbol:func_80002114 reloc:MIPS_LO16 addend:0
+rom:0x1000 symbol:__bss_start reloc:MIPS_HI16 addend:-0x10000
+rom:0x1004 symbol:__bss_start reloc:MIPS_LO16 addend:-0x10000
+rom:0x1008 symbol:__bss_size reloc:MIPS_HI16 addend:-0x10000
+rom:0x100C symbol:__bss_size reloc:MIPS_LO16 addend:-0x10000
+// ucodes
+rom:0x32B4 symbol:rspbootTextEnd reloc:MIPS_HI16 addend:0
+rom:0x32B8 symbol:rspbootTextEnd reloc:MIPS_LO16 addend:0

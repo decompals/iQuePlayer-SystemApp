@@ -1,0 +1,893 @@
+entrypoint = 0x80002000;
+
+// asm/libultra/libc/bcopy.s
+
+bcopy = 0x80004B70;
+
+
+// asm/libultra/libc/bcmp.s
+
+bcmp = 0x8000EF70;
+
+
+// asm/libultra/libc/bzero.s
+
+bzero = 0x80004E90;
+
+
+// asm/libultra/system/parameters.s
+
+
+// asm/libultra/reg/setfpccsr.s
+
+__osSetFpcCsr = 0x8000F300; // type:func
+
+
+// asm/libultra/reg/setwatchlo.s
+
+__osSetWatchLo = 0x8000F320; // type:func
+
+
+// asm/libultra/reg/setsr.s
+
+__osSetSR = 0x8000F310; // type:func
+
+
+// asm/libultra/reg/getsr.s
+
+__osGetSR = 0x8000F2F0; // type:func
+
+
+// asm/libultra/reg/getcause.s
+
+__osGetCause = 0x8000F2E0; // type:func
+
+
+// asm/libultra/exception/exceptasm.s
+
+__osExceptionPreamble = 0x800065F0; // type:func
+__osException = 0x80006620; // type:func
+send_mesg = 0x80007218; // type:func
+__osEnqueueAndYield = 0x80007308; // type:func
+__osEnqueueThread = 0x8000741C; // type:func
+__osPopThread = 0x80007464; // type:func
+__osNop = 0x80007474; // type:func
+__osDispatchThread = 0x8000747C; // type:func
+__osCleanupThread = 0x80007628; // type:func
+
+
+// asm/libultra/exception/setintmask.s
+
+osSetIntMask = 0x800076C0; // type:func
+
+
+// asm/libultra/exception/interrupt.s
+
+__osDisableInt = 0x80007630; // type:func
+__osRestoreInt = 0x800076A0; // type:func
+
+
+// asm/libultra/cache/writebackdcacheall.s
+
+osWritebackDCacheAll = 0x80004620; // type:func
+
+
+// asm/libultra/cache/invaldcache.s
+
+osInvalDCache = 0x800044F0; // type:func
+
+
+// asm/libultra/cache/writebackdcache.s
+
+osWritebackDCache = 0x8000E6A0; // type:func
+
+
+// asm/libultra/cache/invalicache.s
+
+osInvalICache = 0x800045A0; // type:func
+
+
+// asm/libultra/tlb/unmaptlball.s
+
+osUnmapTLBAll = 0x8000F820; // type:func
+
+
+// asm/libultra/tlb/maptlbrdb.s
+
+osMapTLBRdb = 0x8000F7C0; // type:func
+
+
+// asm/libultra/tlb/probetlb.s
+
+__osProbeTLB = 0x80005D50; // type:func
+
+
+// src/libgcc/_udivdi3.c
+
+__udivdi3 = 0x80014950; // type:func
+
+
+// src/libultra/libc/string.c
+
+strchr = 0x80004F30; // type:func
+strlen = 0x80004F60; // type:func
+memcpy = 0x80004F84; // type:func
+
+
+// src/libultra/vi/vimgr.c
+
+osCreateViManager = 0x80005E50; // type:func
+viMgrMain = 0x80005FC8; // type:func
+
+
+// src/libultra/vi/viswapbuf.c
+
+osViSwapBuffer = 0x80006230; // type:func
+
+
+// src/libultra/vi/vi.c
+
+__osViInit = 0x8000F870; // type:func
+
+
+// src/libultra/vi/vigetnextcontext.c
+
+__osViGetNextContext = 0x8000F970; // type:func
+
+
+// src/libultra/vi/visetmode.c
+
+osViSetMode = 0x800061B0; // type:func
+
+
+// src/libultra/vi/vigetnextframebuf.c
+
+osViGetNextFramebuffer = 0x80005E10; // type:func
+
+
+// src/libultra/vi/viswapcontext.c
+
+__osViSwapContext = 0x80006280; // type:func
+
+
+// src/libultra/vi/visetevent.c
+
+osViSetEvent = 0x80006150; // type:func
+
+
+// src/libultra/vi/viblack.c
+
+osViBlack = 0x80006590; // type:func
+
+
+// src/libultra/host/initrdb.c
+
+osInitRdb = 0x8000EEA0; // type:func
+osResetRdb = 0x8000EF28; // type:func
+
+
+// src/libultra/host/readhost.c
+
+__osReadHost = 0x800046C0; // type:func
+osReadHost = 0x8000481C; // type:func
+osBbReadHost = 0x80004874; // type:func
+
+
+// src/libultra/host/rdbsend.c
+
+__osRdbSend = 0x8000EAF0; // type:func
+
+
+// src/libultra/host/writehost.c
+
+osBbInitWriteHost = 0x800048B0; // type:func
+__osWriteHost = 0x80004914; // type:func
+osWriteHost = 0x80004A60; // type:func
+osBbWriteHost = 0x80004AB8; // type:func
+osBbSyncHost = 0x80004AEC; // type:func
+
+
+// src/libultra/convert/virtualtophysical.c
+
+osVirtualToPhysical = 0x80004650; // type:func
+
+
+// src/libultra/bb/fs/fsdelete.c
+
+osBbFDelete = 0x8000AD40; // type:func
+
+
+// src/libultra/bb/fs/fsread.c
+
+osBbFRead = 0x8000AEF0; // type:func
+
+
+// src/libultra/bb/fs/fssync.c
+
+__osBbFsSync = 0x8000B5F0; // type:func
+osBbFAutoSync = 0x8000B7C4; // type:func
+osBbFSync = 0x8000B7D4; // type:func
+
+
+// src/libultra/bb/fs/fsclose.c
+
+osBbFClose = 0x8000AE70; // type:func
+
+
+// src/libultra/bb/fs/fsinit.c
+
+createAccessQueue = 0x8000A4C0; // type:func
+__osBbFsGetAccess = 0x8000A514; // type:func
+__osBbFsRelAccess = 0x8000A564; // type:func
+csum = 0x8000A58C; // type:func
+__osBbFCheck = 0x8000A5C4; // type:func
+__osBbFsReadFat = 0x8000A854; // type:func
+__osBbFsReadFatLinks = 0x8000A8DC; // type:func
+osBbFInit = 0x8000A9A8; // type:func
+osBbFStatFs = 0x8000AB74; // type:func
+
+
+// src/libultra/bb/fs/fsstat.c
+
+osBbFStat = 0x8000B4D0; // type:func
+
+
+// src/libultra/bb/fs/fsrename.c
+
+osBbFRename = 0x8000B820; // type:func
+
+
+// src/libultra/bb/fs/fsopen.c
+
+osBbFOpen = 0x8000AC90; // type:func
+
+
+// src/libultra/bb/fs/fswrite.c
+
+__osBbFReallocBlock = 0x8000B0A0; // type:func
+osBbFWrite = 0x8000B210; // type:func
+
+
+// src/libultra/bb/fs/fscreate.c
+
+__osBbFsFormatName = 0x8000A110; // type:func
+osBbFCreate = 0x8000A1F4; // type:func
+
+
+// src/libultra/bb/sk/skapi.c
+
+skGetId = 0x8000B9C0; // type:func
+symbol = 0x8000B9DC; // type:func
+skLaunchSetup = 0x8000B9F8; // type:func
+skLaunch = 0x8000BA14; // type:func
+skRecryptListValid = 0x8000BA30; // type:func
+skRecryptBegin = 0x8000BA4C; // type:func
+skRecryptData = 0x8000BA68; // type:func
+skRecryptComputeState = 0x8000BA84; // type:func
+skRecryptEnd = 0x8000BAA0; // type:func
+skSignHash = 0x8000BABC; // type:func
+skVerifyHash = 0x8000BAD8; // type:func
+skGetConsumption = 0x8000BAF4; // type:func
+skAdvanceTicketWindow = 0x8000BB10; // type:func
+skSetLimit = 0x8000BB2C; // type:func
+skExit = 0x8000BB48; // type:func
+skKeepAlive = 0x8000BB64; // type:func
+skGetRandomKeyData = 0x8000BB80; // type:func
+skDumpVirage = 0x8000BB9C; // type:func
+skTest2 = 0x8000BBB8; // type:func
+skTest3 = 0x8000BBD4; // type:func
+skResetWindow = 0x8000BBF0; // type:func
+
+
+// src/libultra/bb/atb/atb.c
+
+osBbAtbGetVAddr = 0x8000BC10; // type:func
+osBbAtbSetup = 0x8000BC28; // type:func
+
+
+// src/libultra/bb/sa/memcmp.c
+
+memcmp = 0x8000DD30; // type:func
+
+
+// src/libultra/bb/usb/usbdevice.c
+
+ch9GetStatus = 0x8000C7D0; // type:func
+ch9ClearFeature = 0x8000C8FC; // type:func
+ch9SetFeature = 0x8000CA68; // type:func
+ch9SetAddress = 0x8000CBAC; // type:func
+ch9GetDescription = 0x8000CC30; // type:func
+ch9SetDescription = 0x8000CC58; // type:func
+ch9GetConfig = 0x8000CC78; // type:func
+ch9SetConfig = 0x8000CCE0; // type:func
+ch9GetInterface = 0x8000CDC4; // type:func
+ch9SetInterface = 0x8000CE88; // type:func
+ch9SynchFrame = 0x8000CF0C; // type:func
+ch9Vendor = 0x8000CFE4; // type:func
+dev_service_ep0 = 0x8000D00C; // type:func
+dev_reset_ep0 = 0x8000D1B0; // type:func
+dev_bus_suspend = 0x8000D210; // type:func
+dev_bus_sof = 0x8000D218; // type:func
+_usb_device_state_machine = 0x8000D25C; // type:func
+__usb_arc_device_setup = 0x8000D264; // type:func
+
+
+// src/libultra/bb/usb/usbhw.c
+
+__usb_splhigh = 0x8000C230; // type:func
+__usb_splx = 0x8000C270; // type:func
+__usbDevInterrupt = 0x8000C2B0; // type:func
+__usbDevRead = 0x8000C440; // type:func
+__usbDevWrite = 0x8000C448; // type:func
+__usbCtlrTest = 0x8000C450; // type:func
+__usbHostMode = 0x8000C458; // type:func
+__usbDeviceMode = 0x8000C460; // type:func
+__usbOtgStateChange = 0x8000C50C; // type:func
+osBbUsbGetResetCount = 0x8000C5E8; // type:func
+__usbCtlrInit = 0x8000C600; // type:func
+__usbHwInit = 0x8000C76C; // type:func
+
+
+// src/libultra/bb/usb/rdb_slave.c
+
+__osRdb_Usb_GetAvailSendBytes = 0x8000D300; // type:func
+osRdb_Usb_StartSend = 0x8000D314; // type:func
+rdbs_service_bulk_ep = 0x8000D500; // type:func
+rdb_ip6_input = 0x8000D714; // type:func
+rdbs_ch9GetDescription = 0x8000D884; // type:func
+rdbs_init_data_eps = 0x8000DA44; // type:func
+rdbs_reset_data_eps = 0x8000DB0C; // type:func
+rdbs_stall_data_eps = 0x8000DB78; // type:func
+rdbs_ch9Vendor = 0x8000DBBC; // type:func
+rdbs_reset_ep0 = 0x8000DBC4; // type:func
+rdbs_query = 0x8000DC3C; // type:func
+rdbs_device_init = 0x8000DCC0; // type:func
+
+
+// src/libultra/bb/usb/usbinit.c
+
+__osBbUsbInterrupt = 0x8000BE20; // type:func
+__osBbUsbRead = 0x8000BE3C; // type:func
+__osBbUsbWrite = 0x8000BEA4; // type:func
+__osBbUsbMgrProc = 0x8000BF0C; // type:func
+__osBbUsbThreadInit = 0x8000BFE8; // type:func
+osBbUsbSetCtlrModes = 0x8000C14C; // type:func
+osBbUsbInit = 0x8000C190; // type:func
+
+
+// src/libultra/bb/usb/arc/dev_cncl.c
+
+_usb_device_cancel_transfer = 0x8000FF60; // type:func
+
+
+// src/libultra/bb/usb/arc/vusbd11st.c
+
+_usb_dci_vusb11_get_endpoint_status = 0x80011750; // type:func
+_usb_dci_vusb11_set_endpoint_status = 0x80011770; // type:func
+
+
+// src/libultra/bb/usb/arc/dev_mand.c
+
+_usb_device_init = 0x8000FF90; // type:func
+_usb_device_register_service = 0x800100B0; // type:func
+_usb_device_init_endpoint = 0x80010164; // type:func
+_usb_device_get_transfer_status = 0x80010214; // type:func
+_usb_device_read_setup_data = 0x80010288; // type:func
+_usb_device_recv_data = 0x800102E0; // type:func
+_usb_device_call_service = 0x80010458; // type:func
+
+
+// src/libultra/bb/usb/arc/vusbd11ma.c
+
+_usb_dci_vusb11_init = 0x800108A0; // type:func
+_usb_dci_vusb11_isr = 0x800109B8; // type:func
+_usb_dci_vusb11_bus_reset = 0x800112C4; // type:func
+_usb_dci_vusb11_submit_BDT = 0x8001142C; // type:func
+_usb_dci_vusb11_read_setup = 0x80011470; // type:func
+_usb_dci_vusb11_submit_transfer = 0x80011594; // type:func
+_usb_dci_vusb11_init_endpoint = 0x800116B8; // type:func
+
+
+// src/libultra/bb/usb/arc/copy_bdt.c
+
+_usb_bdt_copy_swab = 0x80011AC0; // type:func
+
+
+// src/libultra/bb/usb/arc/dev_snd.c
+
+_usb_device_send_data = 0x80010520; // type:func
+
+
+// src/libultra/bb/usb/arc/dev_sts.c
+
+_usb_device_unstall_endpoint = 0x80010660; // type:func
+_usb_device_get_status = 0x800106C4; // type:func
+_usb_device_set_status = 0x80010788; // type:func
+_usb_device_stall_endpoint = 0x80010848; // type:func
+
+
+// src/libultra/bb/usb/arc/vusbd11un.c
+
+_usb_dci_vusb11_unstall_endpoint = 0x80011830; // type:func
+_usb_dci_vusb11_cancel_transfer = 0x800118C8; // type:func
+
+
+// src/libultra/bb/card/carderase.c
+
+erase_block = 0x80009500; // type:func
+erase_blocks = 0x80009580; // type:func
+osBbCardEraseBlock = 0x80009618; // type:func
+osBbCardEraseBlocks = 0x800096AC; // type:func
+
+
+// src/libultra/bb/card/cardid.c
+
+osBbCardReadId = 0x80009440; // type:func
+
+
+// src/libultra/bb/card/cardinit.c
+
+__osBbCardPresent = 0x80008500; // type:func
+__osBbCardRelAccess = 0x80008544; // type:func
+__osBbCardGetAccess = 0x8000856C; // type:func
+osBbCardInit = 0x800085D0; // type:func
+__osBbCardDmaCopy = 0x8000878C; // type:func
+
+
+// src/libultra/bb/card/cardwrite.c
+
+fill_page = 0x80008BF0; // type:func
+write_page = 0x80008C68; // type:func
+write_dummy = 0x80008CC4; // type:func
+osBbCardWriteBlock = 0x80008D20; // type:func
+osBbCardWriteBlocks = 0x80008F0C; // type:func
+
+
+// src/libultra/bb/card/cardstatus.c
+
+osBbCardUnhappy = 0x80009280; // type:func
+__osBbCardStatus = 0x800092CC; // type:func
+osBbCardStatus = 0x8000936C; // type:func
+osBbCardChange = 0x800093C8; // type:func
+osBbCardClearChange = 0x800093D8; // type:func
+osBbCardBlocks = 0x800093FC; // type:func
+
+
+// src/libultra/bb/card/cardread.c
+
+read_page = 0x80008980; // type:func
+osBbCardReadBlock = 0x800089BC; // type:func
+
+
+// src/libultra/bb/card/cardmgr.c
+
+__osBbCardInitEvent = 0x80008830; // type:func
+__osBbCardFlushEvent = 0x800088C0; // type:func
+__osBbCardWaitEvent = 0x80008910; // type:func
+
+
+// src/libultra/bb/misc/power.c
+
+osBbPowerOn = 0x80009800; // type:func
+osBbPowerOff = 0x80009814; // type:func
+
+
+// src/libultra/bb/misc/vpllinit.c
+
+__osBbVideoPllInit = 0x8000A010; // type:func
+
+
+// src/libultra/bb/misc/udelay.c
+
+__osBbDelay = 0x80009F60; // type:func
+
+
+// src/libultra/bb/misc/rtc.c
+
+write_rtc = 0x80009880; // type:func
+send_start = 0x800098A8; // type:func
+send_stop = 0x800099EC; // type:func
+read_bytes = 0x80009A34; // type:func
+write_bytes = 0x80009B4C; // type:func
+osBbRtcInit = 0x80009C68; // type:func
+osBbRtcSet = 0x80009C90; // type:func
+osBbRtcGet = 0x80009DF8; // type:func
+
+
+// src/libultra/bb/misc/errorled.c
+
+osBbSetErrorLed = 0x80009830; // type:func
+osBbGetErrorLed = 0x80009868; // type:func
+
+
+// src/libultra/rsp/sirawwrite.c
+
+__osSiRawWriteIo = 0x8000F600; // type:func
+
+
+// src/libultra/rsp/sirawread.c
+
+__osSiRawReadIo = 0x8000F5B0; // type:func
+
+
+// src/libultra/rsp/sptask.c
+
+_VirtualToPhysicalTask = 0x80005290; // type:func
+osSpTaskLoad = 0x8000536C; // type:func
+osSpTaskStartGo = 0x80005470; // type:func
+
+
+// src/libultra/rsp/sp.c
+
+__osSpDeviceBusy = 0x8000F4B0; // type:func
+
+
+// src/libultra/rsp/sprawdma.c
+
+__osSpRawStartDma = 0x8000F520; // type:func
+
+
+// src/libultra/rsp/spsetstat.c
+
+__osSpSetStatus = 0x8000F4E0; // type:func
+
+
+// src/libultra/rsp/spsetpc.c
+
+__osSpSetPc = 0x8000F4F0; // type:func
+
+
+// src/libultra/pi/pimgr.c
+
+osCreatePiManager = 0x80007770; // type:func
+ramromMain = 0x80007920; // type:func
+
+
+// src/libultra/pi/epilinkhandle.c
+
+osEPiLinkHandle = 0x8000FE70; // type:func
+
+
+// src/libultra/pi/cartrominit.c
+
+osCartRomInit = 0x80007E40; // type:func
+
+
+// src/libultra/pi/piwrite.c
+
+osPiWriteIo = 0x8000FF10; // type:func
+
+
+// src/libultra/pi/piread.c
+
+osPiReadIo = 0x8000FEC0; // type:func
+
+
+// src/libultra/pi/pirawdma.c
+
+__osPiRawStartDma = 0x8000FA10; // type:func
+
+
+// src/libultra/pi/epidma.c
+
+osEPiStartDma = 0x80007DA0; // type:func
+
+
+// src/libultra/pi/epirawread.c
+
+__osEPiRawReadIo = 0x8000FB20; // type:func
+
+
+// src/libultra/pi/epirawdma.c
+
+__osEPiRawStartDma = 0x800079E0; // type:func
+
+
+// src/libultra/pi/pirawread.c
+
+__osPiRawReadIo = 0x80011BF0; // type:func
+
+
+// src/libultra/pi/devmgr.c
+
+__osDevMgrMain = 0x80007FA0; // type:func
+
+
+// src/libultra/pi/epirawwrite.c
+
+__osEPiRawWriteIo = 0x8000FCF0; // type:func
+
+
+// src/libultra/pi/pirawwrite.c
+
+__osPiRawWriteIo = 0x80011C90; // type:func
+
+
+// src/libultra/pi/pigetcmdq.c
+
+osPiGetCmdQueue = 0x8000FAF0; // type:func
+
+
+// src/libultra/thread/destroythread.c
+
+osDestroyThread = 0x8000F650; // type:func
+
+
+// src/libultra/thread/startthread.c
+
+osStartThread = 0x80005670; // type:func
+
+
+// src/libultra/thread/setthreadpri.c
+
+osSetThreadPri = 0x800055A0; // type:func
+
+
+// src/libultra/thread/createthread.c
+
+osCreateThread = 0x800054A0; // type:func
+
+
+// src/libultra/thread/getthreadid.c
+
+osGetThreadId = 0x8000F730; // type:func
+
+
+// src/libultra/thread/yieldthread.c
+
+osYieldThread = 0x8000F770; // type:func
+
+
+// src/libultra/thread/getthreadpri.c
+
+osGetThreadPri = 0x8000F750; // type:func
+
+
+// src/libultra/thread/thread.c
+
+__osDequeueThread = 0x80005830; // type:func
+
+
+// src/libultra/thread/stopthread.c
+
+osStopThread = 0x80005780; // type:func
+
+
+// src/libultra/system/initialize.c
+
+__createSpeedParam = 0x8000DE00; // type:func
+__osInitialize_common = 0x8000DEA0; // type:func
+__osInitialize_autodetect = 0x8000E27C; // type:func
+
+
+// src/libultra/system/initialize_emu.c
+
+proutSyncPrintf = 0x8000E620; // type:func
+__osInitialize_emu = 0x8000E680; // type:func
+
+
+// src/libultra/system/initialize_kmc.c
+
+rmonPutchar = 0x8000E2D0; // type:func
+kmc_proutSyncPrintf = 0x8000E324; // type:func
+__osInitialize_kmc = 0x8000E498; // type:func
+__checkHardware_kmc = 0x8000E5D0; // type:func
+
+
+// src/libultra/reg/_setcompare.c
+
+__osSetCompare = 0x8000F330; // type:func
+
+
+// src/libultra/reg/_getcount.c
+
+osGetCount = 0x800051B0; // type:func
+
+
+// src/libultra/exception/setglobalintmask.c
+
+__osSetGlobalIntMask = 0x8000F980; // type:func
+
+
+// src/libultra/exception/resetglobalintmask.c
+
+__osResetGlobalIntMask = 0x8000F9C0; // type:func
+
+
+// src/libultra/message/createmesgqueue.c
+
+osCreateMesgQueue = 0x80004FB0; // type:func
+
+
+// src/libultra/message/sendmesg.c
+
+osSendMesg = 0x8000F1B0; // type:func
+
+
+// src/libultra/message/recvmesg.c
+
+osRecvMesg = 0x80004FE0; // type:func
+
+
+// src/libultra/message/jammesg.c
+
+osJamMesg = 0x8000F080; // type:func
+
+
+// src/libultra/message/seteventmesg.c
+
+osSetEventMesg = 0x80005100; // type:func
+
+
+// src/libultra/time/settimer.c
+
+osSetTimer = 0x80005870; // type:func
+
+
+// src/libultra/time/timerintr.c
+
+__osTimerServicesInit = 0x800059A0; // type:func
+__osTimerInterrupt = 0x800059F8; // type:func
+__osSetTimerIntr = 0x80005BD4; // type:func
+__osInsertTimer = 0x80005C54; // type:func
+
+
+// src/libultra/si/si.c
+
+__osSiDeviceBusy = 0x80011BC0; // type:func
+
+
+// src/libultra/si/pi.c
+
+__osPiCreateAccessQueue = 0x80008440; // type:func
+__osPiGetAccess = 0x80008494; // type:func
+__osPiRelAccess = 0x800084D0; // type:func
+
+
+// src/libultra/debug/threadprofile.c
+
+osThreadProfileCallback = 0x8000EA60; // type:func
+
+
+// src/libultra/debug/kdebugserver.c
+
+string_to_u32 = 0x8000E720; // type:func
+send_packet = 0x8000E74C; // type:func
+clear_IP6 = 0x8000E814; // type:func
+send = 0x8000E8DC; // type:func
+kdebugserver = 0x8000E990; // type:func
+
+
+// src/libultra/rg/free.c
+
+osFree = 0x80011B60; // type:func
+
+
+// src/libultra/rg/malloc.c
+
+osMalloc = 0x80011B20; // type:func
+
+
+// src/libultra/rg/region.c
+
+osCreateRegion = 0x8000F3C0; // type:func
+
+
+// src/libcrypto/sha1.c
+
+SHA1Transform = 0x80011CE0; // type:func
+SHA1Reset = 0x80011F6C; // type:func
+SHA1Input = 0x80011FB8; // type:func
+SHA1Result = 0x800120C0; // type:func
+
+
+// src/sa1/1F40.c
+
+func_80002F40 = 0x80002F40; // type:func
+func_80002F80 = 0x80002F80; // type:func
+func_80002FE8 = 0x80002FE8; // type:func
+func_80003068 = 0x80003068; // type:func
+func_80003094 = 0x80003094; // type:func
+func_8000328C = 0x8000328C; // type:func
+func_800032B8 = 0x800032B8; // type:func
+func_800033CC = 0x800033CC; // type:func
+
+
+// src/sa1/2C20.c
+
+func_80003C20 = 0x80003C20; // type:func
+func_80003C7C = 0x80003C7C; // type:func
+func_800040EC = 0x800040EC; // type:func
+func_80004390 = 0x80004390; // type:func
+
+
+// src/sa1/1050.c
+
+func_80002050 = 0x80002050; // type:func
+func_80002114 = 0x80002114; // type:func
+func_800021C8 = 0x800021C8; // type:func
+func_80002248 = 0x80002248; // type:func
+func_80002320 = 0x80002320; // type:func
+func_8000234C = 0x8000234C; // type:func
+
+// src/sa1/17A0.c
+
+func_800027A0 = 0x800027A0; // type:func
+func_80002838 = 0x80002838; // type:func
+func_80002860 = 0x80002860; // type:func
+func_800028FC = 0x800028FC; // type:func
+func_80002950 = 0x80002950; // type:func
+func_800029CC = 0x800029CC; // type:func
+func_80002ABC = 0x80002ABC; // type:func
+func_80002BF8 = 0x80002BF8; // type:func
+func_80002CB0 = 0x80002CB0; // type:func
+func_80002D94 = 0x80002D94; // type:func
+func_80002DCC = 0x80002DCC; // type:func
+
+
+// src/sa1/2980.c
+
+func_80003980 = 0x80003980; // type:func
+func_800039DC = 0x800039DC; // type:func
+func_80003A28 = 0x80003A28; // type:func
+
+
+// src/libz/zutil.c
+
+zlibVersion = 0x80014170; // type:func
+zlibCompileFlags = 0x8001417C; // type:func
+zError = 0x80014188; // type:func
+zcalloc = 0x800141A4; // type:func
+zcfree = 0x800141AC; // type:func
+
+// src/libz/gzip.c
+
+myalloc = 0x80012190; // type:func
+myfree = 0x800121D0; // type:func
+expand_gzip = 0x800121DC; // type:func
+
+
+// src/libz/inflate.c
+
+inflateReset = 0x80012270; // type:func
+inflateInit2_ = 0x800122CC; // type:func
+inflateInit_ = 0x800123D4; // type:func
+fixedtables = 0x800123FC; // type:func
+updatewindow = 0x80012428; // type:func
+inflate = 0x8001257C; // type:func
+inflateEnd = 0x800136BC; // type:func
+inflateSetDictionary = 0x80013730; // type:func
+syncsearch = 0x80013830; // type:func
+inflateSync = 0x800138A8; // type:func
+inflateSyncPoint = 0x800139F4; // type:func
+inflateCopy = 0x80013A2C; // type:func
+
+
+// src/libz/inffast.c
+
+inflate_fast = 0x800143A0; // type:func
+
+
+// src/libz/adler32.c
+
+adler32 = 0x800141C0; // type:func
+
+
+// src/libz/inftrees.c
+
+inflate_table = 0x80013C30; // type:func
+
+
+// src/libfb/setbg.c
+
+fbSetBg = 0x800044E0; // type:func
+
+
+// src/libfb/clear.c
+
+fbClear = 0x80004410; // type:func
+
+
+// src/libfb/init.c
+
+fbInit = 0x80004480; // type:func

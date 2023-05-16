@@ -1,0 +1,281 @@
+name: SA1
+sha1: d5db3d072ff2028f346c731e3f0f1531e23c4d9d
+options:
+  basename: sa1
+  target_path: 1106_sa1.bin
+  base_path: .
+  compiler: GCC
+  find_file_boundaries: True
+  header_encoding: ASCII
+  platform: n64
+  gfx_ucode: f3d
+  use_legacy_include_asm: False
+  # asm_path: asm
+  # src_path: src
+  # build_path: build
+  # undefined_funcs_auto: True
+  undefined_funcs_auto_path: tools/splat_files/undefined_funcs_auto.txt
+  # undefined_syms_auto: True
+  undefined_syms_auto_path: tools/splat_files/undefined_syms_auto.txt
+  symbol_addrs_path:
+   - tools/splat_files/symbol_addrs_text.txt
+   - tools/splat_files/symbol_addrs_data.txt
+   - tools/splat_files/symbol_addrs_bss.txt
+   - tools/splat_files/ignored_addresses.txt
+  reloc_addrs_path: tools/splat_files/relocs.txt
+  # extensions_path: tools/splat_ext
+  # mips_abi_float_regs: o32
+  # section_order: [".text", ".data", ".rodata", ".bss"]
+  # auto_all_sections: [".data", ".rodata", ".bss"]
+  libultra_symbols: True
+  hardware_regs: False
+  generated_c_preamble: |
+    #include "ultra64.h"
+    #include "sa1.h"
+    #include "macros.h"
+    #include "include_asm.h"
+segments:
+  - name: header
+    type: header
+    start: 0
+
+  - name: boot
+    type: bin
+    start: 0x40
+
+  - name: entry
+    type: code
+    start: 0x1000
+    vram: 0x80002000
+    subsegments:
+      - [0x1000, hasm, entrypoint]
+
+  - name: main
+    type: code
+    start: 0x1050
+    vram: 0x80002050
+    follows_vram: entry
+    bss_size: 0xAF610
+    subsegments:
+      # SA1 files
+      - [0x1050, c, sa1/1050]
+      - [0x17A0, c, sa1/17A0]
+      - [0x1F40, c, sa1/1F40]
+      - [0x2980, c, sa1/2980]
+      - [0x2C20, c, sa1/2C20]
+      # libfb files
+      - [0x3410, c, libfb/clear]
+      - [0x3480, c, libfb/init]
+      - [0x34E0, c, libfb/setbg]
+      # libultra files
+      - [0x34F0, hasm, libultra/cache/invaldcache]
+      - [0x35A0, hasm, libultra/cache/invalicache]
+      - [0x3620, hasm, libultra/cache/writebackdcacheall]
+      - [0x3650, c, libultra/convert/virtualtophysical]
+      - [0x36C0, c, libultra/host/readhost]
+      - [0x38B0, c, libultra/host/writehost]
+      - [0x3B70, hasm, libultra/libc/bcopy]
+      - [0x3E90, hasm, libultra/libc/bzero]
+      - [0x3F30, c, libultra/libc/string]
+      - [0x3FB0, c, libultra/message/createmesgqueue]
+      - [0x3FE0, c, libultra/message/recvmesg]
+      - [0x4100, c, libultra/message/seteventmesg]
+      - [0x41B0, c, libultra/reg/_getcount]
+      - [0x4290, c, libultra/rsp/sptask]
+      - [0x44A0, c, libultra/thread/createthread]
+      - [0x45A0, c, libultra/thread/setthreadpri]
+      - [0x4670, c, libultra/thread/startthread]
+      - [0x4780, c, libultra/thread/stopthread]
+      - [0x4830, c, libultra/thread/thread]
+      - [0x4870, c, libultra/time/settimer]
+      - [0x49A0, c, libultra/time/timerintr]
+      - [0x4D50, hasm, libultra/tlb/probetlb]
+      - [0x4E10, c, libultra/vi/vigetnextframebuf]
+      - [0x4E50, c, libultra/vi/vimgr]
+      - [0x5150, c, libultra/vi/visetevent]
+      - [0x51B0, c, libultra/vi/visetmode]
+      - [0x5230, c, libultra/vi/viswapbuf]
+      - [0x5280, c, libultra/vi/viswapcontext]
+      - [0x5590, c, libultra/vi/viblack]
+      - [0x55F0, hasm, libultra/exception/exceptasm]
+      - [0x6630, hasm, libultra/exception/interrupt]
+      - [0x66C0, hasm, libultra/exception/setintmask]
+      - [0x6770, c, libultra/pi/pimgr]
+      - [0x69E0, c, libultra/pi/epirawdma]
+      - [0x6DA0, c, libultra/pi/epidma]
+      - [0x6E40, c, libultra/pi/cartrominit]
+      - [0x6FA0, c, libultra/pi/devmgr]
+      - [0x7440, c, libultra/pi/piacs]
+      - [0x7500, c, libultra/bb/card/cardinit]
+      - [0x7830, c, libultra/bb/card/cardmgr]
+      - [0x7980, c, libultra/bb/card/cardread]
+      - [0x7BF0, c, libultra/bb/card/cardwrite]
+      - [0x8280, c, libultra/bb/card/cardstatus]
+      - [0x8440, c, libultra/bb/card/cardid]
+      - [0x8500, c, libultra/bb/card/carderase]
+      - [0x8800, c, libultra/bb/misc/power]
+      - [0x8830, c, libultra/bb/misc/errorled]
+      - [0x8880, c, libultra/bb/misc/rtc]
+      - [0x8F60, c, libultra/bb/misc/udelay]
+      - [0x9010, c, libultra/bb/misc/vpllinit]
+      - [0x9110, c, libultra/bb/fs/fscreate]
+      - [0x94C0, c, libultra/bb/fs/fsinit]
+      - [0x9C90, c, libultra/bb/fs/fsopen]
+      - [0x9D40, c, libultra/bb/fs/fsdelete]
+      - [0x9E70, c, libultra/bb/fs/fsclose]
+      - [0x9EF0, c, libultra/bb/fs/fsread]
+      - [0xA0A0, c, libultra/bb/fs/fswrite]
+      - [0xA4D0, c, libultra/bb/fs/fsstat]
+      - [0xA5F0, c, libultra/bb/fs/fssync]
+      - [0xA820, c, libultra/bb/fs/fsrename]
+      - [0xA9C0, c, libultra/bb/sk/skapi]
+      - [0xAC10, c, libultra/bb/atb/atb]
+      - [0xAE20, c, libultra/bb/usb/usbinit]
+      - [0xB230, c, libultra/bb/usb/usbhw]
+      - [0xB7D0, c, libultra/bb/usb/usbdevice]
+      - [0xC300, c, libultra/bb/usb/rdb_slave]
+      - [0xCD30, c, libultra/bb/sa/memcmp]
+      - [0xCD70, hasm, libultra/system/parameters]
+      - [0xCE00, c, libultra/system/initialize]
+      - [0xD2D0, c, libultra/system/initialize_kmc]
+      - [0xD620, c, libultra/system/initialize_emu]
+      - [0xD6A0, hasm, libultra/cache/writebackdcache]
+      - [0xD720, c, libultra/debug/kdebugserver]
+      - [0xDA60, c, libultra/debug/threadprofile]
+      - [0xDAF0, c, libultra/host/rdbsend]
+      - [0xDEA0, c, libultra/host/initrdb]
+      - [0xDF70, hasm, libultra/libc/bcmp]
+      - [0xE080, c, libultra/message/jammesg]
+      - [0xE1B0, c, libultra/message/sendmesg]
+      - [0xE2E0, hasm, libultra/reg/getcause]
+      - [0xE2F0, hasm, libultra/reg/getsr]
+      - [0xE300, hasm, libultra/reg/setfpccsr]
+      - [0xE310, hasm, libultra/reg/setsr]
+      - [0xE320, hasm, libultra/reg/setwatchlo]
+      - [0xE330, c, libultra/reg/_setcompare]
+      - [0xE3C0, c, libultra/rg/region]
+      - [0xE4B0, c, libultra/rsp/sp]
+      - [0xE4E0, c, libultra/rsp/spsetstat]
+      - [0xE4F0, c, libultra/rsp/spsetpc]
+      - [0xE520, c, libultra/rsp/sprawdma]
+      - [0xE5B0, c, libultra/si/sirawread]
+      - [0xE600, c, libultra/si/sirawwrite]
+      - [0xE650, c, libultra/thread/destroythread]
+      - [0xE730, c, libultra/thread/getthreadid]
+      - [0xE750, c, libultra/thread/getthreadpri]
+      - [0xE770, c, libultra/thread/yieldthread]
+      - [0xE7C0, hasm, libultra/tlb/maptlbrdb]
+      - [0xE820, hasm, libultra/tlb/unmaptlball]
+      - [0xE870, c, libultra/vi/vi]
+      - [0xE970, c, libultra/vi/vigetcurrcontext]
+      - [0xE980, c, libultra/exception/setglobalintmask]
+      - [0xE9C0, c, libultra/exception/resetglobalintmask]
+      - [0xEA10, c, libultra/pi/pirawdma]
+      - [0xEAF0, c, libultra/pi/pigetcmdq]
+      - [0xEB20, c, libultra/pi/epirawread]
+      - [0xECF0, c, libultra/pi/epirawwrite]
+      - [0xEE70, c, libultra/pi/epilinkhandle]
+      - [0xEEC0, c, libultra/pi/piread]
+      - [0xEF10, c, libultra/pi/piwrite]
+      - [0xEF60, c, libultra/bb/usb/arc/dev_cncl]
+      - [0xEF90, c, libultra/bb/usb/arc/dev_mand]
+      - [0xF520, c, libultra/bb/usb/arc/dev_snd]
+      - [0xF660, c, libultra/bb/usb/arc/dev_sts]
+      - [0xF8A0, c, libultra/bb/usb/arc/vusbd11ma]
+      - [0x10750, c, libultra/bb/usb/arc/vusbd11st]
+      - [0x10830, c, libultra/bb/usb/arc/vusbd11un]
+      - [0x10AC0, c, libultra/bb/usb/arc/copy_bdt]
+      - [0x10B20, c, libultra/rg/malloc]
+      - [0x10B60, c, libultra/rg/free]
+      - [0x10BC0, c, libultra/si/si]
+      - [0x10BF0, c, libultra/pi/pirawread]
+      - [0x10C90, c, libultra/pi/pirawwrite]
+      # libcrypto files
+      - [0x10CE0, c, libcrypto/sha1]
+      # libz files
+      - [0x11190, c, libz/gzip]
+      - [0x11270, c, libz/inflate]
+      - [0x12C30, c, libz/inftrees]
+      - [0x13170, c, libz/zutil]
+      - [0x131C0, c, libz/adler32]
+      - [0x133A0, c, libz/inffast]
+      # libgcc files
+      - [0x13950, c, libgcc/_udivdi3]
+      # ucode
+      - [0x13EC0, data, rsp/rspboot]
+      - [0x13F90, data, rsp/gspFast3D]
+
+    # DATA
+
+      # SA1 files
+      - [0x15390, data, sa1/1050]
+      - [0x153B0, data, sa1/1F40]
+      - [0x153D0, data, sa1/2C20]
+      - [0x15490, data]
+      # libfb files
+      # libultra files
+      - [0x18140, data, libultra/host/readhost]
+      - [0x18150, data, libultra/host/writehost]
+      - [0x18160, data, libultra/message/seteventmesg]
+      - [0x18170, data, libultra/thread/thread]
+      - [0x18190, data, libultra/time/timerintr]
+      - [0x181A0, data, libultra/vi/vimgr]
+      - [0x181C0, data, libultra/vimodes/vimodentsclpn1]
+      - [0x18210, data, libultra/vimodes/vimodentschpf1]
+      - [0x18260, data, libultra/exception/exceptasm]
+      - [0x182A0, data, libultra/pi/pimgr]
+      - [0x182D0, data, libultra/pi/cartrominit]
+      - [0x182E0, data, libultra/pi/piacs]
+      - [0x182F0, data, libultra/bb/card/cardinit]
+      - [0x18300, data, libultra/bb/fs/fsinit]
+      - [0x18310, data, libultra/bb/usb/usbhw]
+      - [0x18330, data, libultra/bb/usb/usbdevice]
+      - [0x18340, data, libultra/bb/usb/rdb_slave]
+      - [0x18400, data, libultra/system/initialize]
+      - [0x18440, data, libultra/system/initialize_kmc]
+      - [0x18450, data, libultra/debug/kdebugserver]
+      - [0x18460, data, libultra/debug/threadprofile]
+      - [0x18470, data, libultra/host/rdbsend]
+      - [0x18480, data, libultra/host/initrdb]
+      - [0x18490, data, libultra/vi/vi]
+      - [0x18500, data, libultra/vimodes/vimodentsclan1]
+      - [0x18550, data, libultra/vimodes/vimodepallan1]
+      - [0x185A0, data, libultra/vimodes/vimodempallan1]
+      # libcrypto files
+      # libz files
+      - [0x185F0, data, libz/gzip]
+      # libgcc files
+
+    # RODATA
+
+      # SA1 files
+      - [0x18600, rodata, sa1/1F40]
+      # libfb files
+      # libultra files
+      - [0x18690, rodata, libultra/exception/exceptasm]
+      - [0x18700, rodata, libultra/exception/setintmask]
+      - [0x18780, rodata, libultra/pi/devmgr]
+      - [0x187A0, rodata, libultra/bb/card/cardinit]
+      - [0x187D0, rodata, libultra/bb/fs/fsinit]
+      - [0x187E0, rodata, libultra/bb/usb/usbdevice]
+      - [0x18820, rodata, libultra/bb/usb/rdb_slave]
+      - [0x18850, rodata, libultra/bb/usb/arc/dev_sts]
+      # libcrypto files
+      # libz files
+      - [0x18880, rodata, libz/gzip]
+      - [0x18890, rodata, libz/inflate]
+      - [0x19310, rodata, libz/inftrees]
+      - [0x19410, rodata, libz/zutil]
+      - [0x194D0, rodata, libz/inffast]
+      # libgcc files
+      - [0x19530, rodata, libgcc/_udivdi3]
+      # ucode
+      - [0x19630, rodata, rsp/gspFast3D]
+
+    # BSS
+
+      - { start: 0x19E30, type: bss, name: all_bss, vram: 0x8001AE30 }
+
+  - [0x19E30]
+  # Padding to next multiple of 0x4000
+  - [0x1C000]
