@@ -4,7 +4,7 @@ ELF := $(TARGET:.bin=.elf)
 COMPARE ?= 1
 
 PYTHON := python3
-SPLAT := $(PYTHON) ../splat/split.py
+SPLAT := $(PYTHON) tools/splat/split.py
 ELFPATCH := $(PYTHON) tools/elfpatch.py
 
 CROSS := mips-linux-gnu-
