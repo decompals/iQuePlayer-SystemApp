@@ -100,7 +100,7 @@ s32 func_80002950(u8* arg0, void* arg1, s32 arg2) {
     return FALSE;
 }
 
-s32 skSignHash(BbShaHash* hash, BbEccSig* outSignature, BbRsaCert**, BbAppLaunchCrls*);
+s32 skVerifyHash(BbShaHash* hash, BbEccSig* outSignature, BbRsaCert**, BbAppLaunchCrls*);
 
 s32 func_800029CC(u8* arg0) {
     BbRsaCert* certChain[3];
@@ -135,8 +135,7 @@ s32 func_800029CC(u8* arg0) {
     SHA1Input(&sha1Ctx, (void*)cmd, sizeof(BbContentMetaDataHead) - sizeof(BbRsaSig2048));
     SHA1Result(&sha1Ctx, (u8*)&hash);
 
-    // TODO what's going on here
-    return skSignHash(&hash, (BbEccSig*)&cmd->contentMetaDataSign, certChain, appLaunchCrls);
+    return skVerifyHash(&hash, &cmd->contentMetaDataSign, certChain, appLaunchCrls);
 }
 
 void* func_80002ABC(BbContentMetaDataHead* cmd, u16* fsBlockList, s32 maxListLen, void* dst) {
