@@ -8,3 +8,5 @@ expected
 
 *.bin
 *.elf
+
+ctx.c
