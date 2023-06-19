@@ -128,7 +128,7 @@ segments:
       - [0xA4D0, c, libultra/bb/fs/fsstat]
       - [0xA5F0, c, libultra/bb/fs/fssync]
       - [0xA820, c, libultra/bb/fs/fsrename]
-      - [0xA9C0, c, libultra/bb/sk/skapi]
+      - [0xA9C0, hasm, libultra/bb/sk/skapi]
       - [0xAC10, c, libultra/bb/atb/atb]
       - [0xAE20, c, libultra/bb/usb/usbinit]
       - [0xB230, c, libultra/bb/usb/usbhw]

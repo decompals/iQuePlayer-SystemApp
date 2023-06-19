@@ -254,29 +254,29 @@ __osBbFsFormatName = 0x8000A110; // type:func
 osBbFCreate = 0x8000A1F4; // type:func
 
 
-// src/libultra/bb/sk/skapi.c
+// src/libultra/bb/sk/skapi.s
 
 skGetId = 0x8000B9C0; // type:func
-symbol = 0x8000B9DC; // type:func
-skLaunchSetup = 0x8000B9F8; // type:func
-skLaunch = 0x8000BA14; // type:func
-skRecryptListValid = 0x8000BA30; // type:func
-skRecryptBegin = 0x8000BA4C; // type:func
-skRecryptData = 0x8000BA68; // type:func
-skRecryptComputeState = 0x8000BA84; // type:func
-skRecryptEnd = 0x8000BAA0; // type:func
-skSignHash = 0x8000BABC; // type:func
-skVerifyHash = 0x8000BAD8; // type:func
-skGetConsumption = 0x8000BAF4; // type:func
-skAdvanceTicketWindow = 0x8000BB10; // type:func
-skSetLimit = 0x8000BB2C; // type:func
-skExit = 0x8000BB48; // type:func
-skKeepAlive = 0x8000BB64; // type:func
-skGetRandomKeyData = 0x8000BB80; // type:func
-skDumpVirage = 0x8000BB9C; // type:func
-skTest2 = 0x8000BBB8; // type:func
-skTest3 = 0x8000BBD4; // type:func
-skResetWindow = 0x8000BBF0; // type:func
+skLaunchSetup = 0x8000B9DC; // type:func
+skLaunch = 0x8000B9F8; // type:func
+skRecryptListValid = 0x8000BA14; // type:func
+skRecryptBegin = 0x8000BA30; // type:func
+skRecryptData = 0x8000BA4C; // type:func
+skRecryptComputeState = 0x8000BA68; // type:func
+skRecryptEnd = 0x8000BA84; // type:func
+skSignHash = 0x8000BAA0; // type:func
+skVerifyHash = 0x8000BABC; // type:func
+skGetConsumption = 0x8000BAD8; // type:func
+skAdvanceTicketWindow = 0x8000BAF4; // type:func
+skSetLimit = 0x8000BB10; // type:func
+skExit = 0x8000BB2C; // type:func
+skKeepAlive = 0x8000BB48; // type:func
+skGetRandomKeyData = 0x8000BB64; // type:func
+skDumpVirage = 0x8000BB80; // type:func
+skTest2 = 0x8000BB9C; // type:func
+skTest3 = 0x8000BBB8; // type:func
+skResetWindow = 0x8000BBD4; // type:func
+skValidateRls = 0x8000BBF0; // type:func
 
 
 // src/libultra/bb/atb/atb.c

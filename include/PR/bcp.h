@@ -91,6 +91,8 @@
 #define PI_10000_REG(i) (PI_BASE_REG + 0x10000 + (i))
 
 
+#define PI_10404_REG (PI_BASE_REG + 0x10404)
+
 
 //! PI_ATB_LOWER_REG ?
 #define PI_10500_REG(i) (PI_BASE_REG + 0x10500 + (i) * 4)
