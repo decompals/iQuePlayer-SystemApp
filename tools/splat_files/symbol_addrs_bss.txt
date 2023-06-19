@@ -79,9 +79,7 @@ D_80047DB0 = 0x80047DB0; // size:0x1B0 file=sa1/1F40.c
 D_80047F60 = 0x80047F60; // size:0x8000 file=sa1/1F40.c
 D_8004FF60 = 0x8004FF60; // size:0x7800 file=sa1/2C20.c
 gfxListHead = 0x80057760; // size:4 file=sa1/2C20.c
-D_80057768 = 0x80057768; // size:0x14000 file=sa1/2C20.c
-D_8006B768 = 0x8006B768; // size:4 file=sa1/2C20.c
-D_8006B76C = 0x8006B76C; // size:4 file=sa1/2C20.c
+D_80057768 = 0x80057768; // size:0x14004 file=sa1/2C20.c
 D_8006B770 = 0x8006B770; // size:0x18 file=sa1/2C20.c
 D_8006B788 = 0x8006B788; // size:4 file=sa1/2C20.c
 D_8006B78C = 0x8006B78C; // size:4 file=sa1/2C20.c
