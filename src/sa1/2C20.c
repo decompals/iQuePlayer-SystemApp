@@ -3,6 +3,8 @@
 #include "macros.h"
 #include "include_asm.h"
 
+s32 expand_gzip(void* src, void* dst, size_t, size_t);
+
 extern OSMesgQueue D_8006B770;
 extern OSMesg D_8006B788[1];
 extern OSMesg D_8006B78C;
@@ -24,10 +26,6 @@ extern u8 framebuffer[];
 extern Gfx D_800163E0[];
 extern Gfx D_80016408[];
 extern Gfx* gfxListHead;
-
-s32 expand_gzip(void* src, void* dst, size_t, size_t);
-
-
 
 void func_80003C20(void) {
     osCreateMesgQueue(&D_8006B770, D_8006B788, ARRLEN(D_8006B788));

@@ -19,7 +19,7 @@ OBJDUMP := $(CROSS)objdump
 STRIP   := $(CROSS)strip
 
 INC := -I include -I include/PR -I include/sys -I src
-CFLAGS := $(INC) -D_MIPS_SZLONG=32 -D_LANGUAGE_C -DBBPLAYER -nostdinc -fno-builtin -fno-PIC -mno-abicalls -mcpu=4300 -G 0 -mgp32 -Wall -Wa,-Iinclude
+CFLAGS := $(INC) -D_MIPS_SZLONG=32 -D_LANGUAGE_C -DBBPLAYER -DF3D_GBI -nostdinc -fno-builtin -fno-PIC -mno-abicalls -mcpu=4300 -G 0 -mgp32 -Wall -Wa,-Iinclude
 ASFLAGS := $(INC) -D_MIPS_SZLONG=32 -D_LANGUAGE_ASSEMBLY -DBBPLAYER -nostdinc -fno-PIC -mno-abicalls -mcpu=4300 -G 0
 OPTFLAGS := -Os
 MIPS_VERSION := -mips2

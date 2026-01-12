@@ -65,9 +65,8 @@ extern "C" {
 extern void __osInitialize_common(void);
 
 #if defined(_FINALROM)
-
+#undef osInitialize
 #define osInitialize() __osInitialize_common()
-
 #else
 
 /* PARTNER-N64 */
@@ -75,6 +74,7 @@ extern void __osInitialize_common(void);
 extern void __osInitialize_kmc(void);
 #define osReadHost osReadHost_pt
 #define osWriteHost osWriteHost_pt
+#undef osInitialize
 #define osInitialize()       \
 {                            \
     __osInitialize_common();  \
@@ -86,6 +86,7 @@ extern void __osInitialize_kmc(void);
 extern void __osInitialize_msp(void);
 #define osReadHost osReadHost_pt
 #define osWriteHost osWriteHost_pt
+#undef osInitialize
 #define osInitialize()       \
 {                            \
     __osInitialize_common(); \
@@ -95,6 +96,7 @@ extern void __osInitialize_msp(void);
 /* IS-Viewer(for Debugger) */
 #elif defined(ISV64)
 extern void __osInitialize_isv(void);
+#undef osInitialize
 #define osInitialize()       \
 {                            \
     __osInitialize_common(); \
@@ -104,6 +106,7 @@ extern void __osInitialize_isv(void);
 /* Emulation board for INDY */
 #elif defined(EMU64)
 extern void __osInitialize_emu(void);
+#undef osInitialize
 #define osInitialize()       \
 {                            \
     __osInitialize_common(); \
@@ -117,6 +120,7 @@ extern void __osInitialize_msp(void);
 extern void __osInitialize_kmc(void);
 extern void __osInitialize_isv(void);
 extern void __osInitialize_emu(void);
+#undef osInitialize
 #define osInitialize()           \
 {                                \
     __osInitialize_common();     \

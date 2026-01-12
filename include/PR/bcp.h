@@ -87,11 +87,11 @@
 
 
 
-//! PI_EX_DMA_BUF ?
-#define PI_10000_REG(i) (PI_BASE_REG + 0x10000 + (i))
+#define PI_10000_BUF_START  (PI_BASE_REG + 0x10000)
+#define PI_10000_BUF(n)     (PI_10000_BUF_START + (n))
 
-
-#define PI_10404_REG (PI_BASE_REG + 0x10404)
+#define PI_10400_REG        (PI_BASE_REG + 0x10400)
+#define PI_10404_REG        (PI_BASE_REG + 0x10404)
 
 
 //! PI_ATB_LOWER_REG ?
@@ -111,6 +111,28 @@
 //! ?
 #define SI_1C_REG (SI_BASE_REG + 0x1C)
 
+
+
+/**
+ * Video Interface (VI) Additional Registers
+ */
+
+#define VI_BUFTEST_ADDR_REG (VI_BASE_REG + 0x38)
+
+#define VI_BUFTEST_DATA_REG (VI_BASE_REG + 0x3C)
+
+#define VI_CTRL_TEST_ENABLE (1 <<  7)
+#define VI_CTRL_KILL_WE     (1 << 11)
+
+
+
+/**
+ * Virage0 Registers
+ */
+
+#define VIRAGE0_BASE_ADDR   0x1FC80000
+
+#define VIRAGE0_8000_REG    (VIRAGE0_BASE_ADDR + 0x8000)
 
 
 #endif

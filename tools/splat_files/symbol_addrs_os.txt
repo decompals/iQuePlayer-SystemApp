@@ -1,0 +1,9 @@
+__osBbEepromAddress = 0x8000035C; // size:4 
+__osBbEepromSize = 0x80000360; // size:4 
+__osBbFlashAddress = 0x80000364; // size:4 
+__osBbFlashSize = 0x80000368; // size:4 
+__osBbSramAddress = 0x8000036C; // size:4 
+__osBbSramSize = 0x80000370; // size:4 
+__osBbPakAddress = 0x80000374; // size:4 
+__osBbPakSize = 0x80000384; // size:4 
+__osBbIsBb = 0x80000388; // size:4 

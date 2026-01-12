@@ -1,13 +1,10 @@
+#include "PR/os_internal.h"
 #include "ultra64.h"
 #include "sa1.h"
 #include "macros.h"
 #include "include_asm.h"
 
-#define VI_BUFTEST_ADDR_REG (VI_BASE_REG + 0x38)
-#define VI_BUFTEST_DATA_REG (VI_BASE_REG + 0x3C)
-
-#define VI_CTRL_TEST_ENABLE (1 <<  7)
-#define VI_CTRL_KILL_WE     (1 << 11)
+void __osBbDelay(u32);
 
 void func_80003980(void) {
     u32 saveCtrl = IO_READ(VI_CONTROL_REG);

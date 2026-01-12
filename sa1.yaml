@@ -21,6 +21,7 @@ options:
    - tools/splat_files/symbol_addrs_text.txt
    - tools/splat_files/symbol_addrs_data.txt
    - tools/splat_files/symbol_addrs_bss.txt
+   - tools/splat_files/symbol_addrs_os.txt
    - tools/splat_files/ignored_addresses.txt
   reloc_addrs_path: tools/splat_files/relocs.txt
   # extensions_path: tools/splat_ext
