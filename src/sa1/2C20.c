@@ -5,35 +5,34 @@
 
 s32 expand_gzip(void* src, void* dst, size_t, size_t);
 
-extern OSMesgQueue D_8006B770;
-extern OSMesg D_8006B788[1];
-extern OSMesg D_8006B78C;
+extern OSMesgQueue rdpDoneQueue;
+extern OSMesg rdpDoneMsgBuf[1];
+extern OSMesg rdpDoneMsg;
 
 typedef struct {
     Gfx cmdBuffer[0x2800];
     void* frameBuffer;
 } GfxPool;
 
-extern GfxPool D_80057768;
+extern GfxPool gfxPool;
 
-extern u8 D_8004FF60[];
+extern u8 imgBuffer[0x7800];
 extern u64 gfxYieldBuffer[OS_YIELD_DATA_SIZE/sizeof(u64)];
 extern u64 gfxDramStack[0x400/sizeof(u64)];
 
-extern void* D_8006B768;
 extern u8 framebuffer[];
 
-extern Gfx D_800163E0[];
-extern Gfx D_80016408[];
+extern Gfx rspInitDL[];
+extern Gfx rdpInitDL[];
 extern Gfx* gfxListHead;
 
-void func_80003C20(void) {
-    osCreateMesgQueue(&D_8006B770, D_8006B788, ARRLEN(D_8006B788));
-    osSetEventMesg(OS_EVENT_DP, &D_8006B770, D_8006B78C);
-    D_80057768.frameBuffer = framebuffer;
+void sa1InitRDP(void) {
+    osCreateMesgQueue(&rdpDoneQueue, rdpDoneMsgBuf, ARRLEN(rdpDoneMsgBuf));
+    osSetEventMesg(OS_EVENT_DP, &rdpDoneQueue, rdpDoneMsg);
+    gfxPool.frameBuffer = framebuffer;
 }
 
-void func_80003C7C(void* timg, s32 fmt, s32 siz, u32 width, u32 height, s32 tileWidthX, s32 tileWidthY, f32 x, f32 y) {
+void sa1BuildImageDL(void* timg, u32 fmt, u32 siz, u32 width, u32 height, u32 tileWidthX, u32 tileWidthY, f32 x, f32 y) {
     f32 s;
     f32 t;
     s32 uls;
@@ -48,10 +47,10 @@ void func_80003C7C(void* timg, s32 fmt, s32 siz, u32 width, u32 height, s32 tile
     s32 uly;
     f32 temp;
 
-    gSPDisplayList(gfxListHead++, D_80016408);
+    gSPDisplayList(gfxListHead++, rdpInitDL);
 
-    for (offx = 0; offx < width; offx += tileWidthX) {
-        for (offy = 0; offy < height; offy += tileWidthY) {
+    for (offx = 0; (u32)offx < width; offx += tileWidthX) {
+        for (offy = 0; (u32)offy < height; offy += tileWidthY) {
             if (offx != 0) {
                 s = (f32)offx - 0.5;
             } else {
@@ -112,13 +111,13 @@ void func_80003C7C(void* timg, s32 fmt, s32 siz, u32 width, u32 height, s32 tile
     }
 }
 
-void func_800040EC(GfxPool* gfxPool) {
+void sa1RenderImage(GfxPool* gfxPool) {
     OSTask gfxTask;
 
     gfxListHead = gfxPool->cmdBuffer;
 
-    gSPDisplayList(gfxListHead++, D_80016408);
-    gSPDisplayList(gfxListHead++, D_800163E0);
+    gSPDisplayList(gfxListHead++, rdpInitDL);
+    gSPDisplayList(gfxListHead++, rspInitDL);
     gDPPipeSync(gfxListHead++);
     gDPSetCycleType(gfxListHead++, G_CYC_FILL);
     gDPSetColorImage(gfxListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, osVirtualToPhysical(gfxPool->frameBuffer));
@@ -126,16 +125,16 @@ void func_800040EC(GfxPool* gfxPool) {
     gDPFillRectangle(gfxListHead++, 0, 0, 320 - 1, 240 - 1);
     gDPPipeSync(gfxListHead++);
 
-    func_80003C7C(D_8004FF60, G_IM_FMT_RGBA, G_IM_SIZ_16b, 160, 96, 32, 32, 80.0f, 72.0f);
+    sa1BuildImageDL(imgBuffer, G_IM_FMT_RGBA, G_IM_SIZ_16b, 160, 96, 32, 32, 80.0f, 72.0f);
 
     gDPFullSync(gfxListHead++);
     gSPEndDisplayList(gfxListHead++);
 
     gfxTask.t.type = M_GFXTASK;
-    gfxTask.t.ucode_boot = rspbootTextStart;
+    gfxTask.t.ucode_boot = (u64*)rspbootTextStart;
 	gfxTask.t.ucode_boot_size = (u32)rspbootTextEnd - (u32)rspbootTextStart;
-	gfxTask.t.ucode = gspFast3DTextStart;
-	gfxTask.t.ucode_data = gspFast3DDataStart;
+	gfxTask.t.ucode = (u64*)gspFast3DTextStart;
+	gfxTask.t.ucode_data = (u64*)gspFast3DDataStart;
 	gfxTask.t.ucode_data_size = 0x800;
 	gfxTask.t.dram_stack = gfxDramStack;
 	gfxTask.t.dram_stack_size = 0x400;
@@ -150,17 +149,17 @@ void func_800040EC(GfxPool* gfxPool) {
     osWritebackDCacheAll();
     osSpTaskLoad(&gfxTask);
     osSpTaskStartGo(&gfxTask);
-    osRecvMesg(&D_8006B770, &D_8006B78C, OS_MESG_BLOCK);
+    osRecvMesg(&rdpDoneQueue, &rdpDoneMsg, OS_MESG_BLOCK);
     osViSwapBuffer(gfxPool->frameBuffer);
 }
 
-s32 func_80004390(void* arg0, size_t arg1) {
+s32 sa1DisplayImage(void* arg0, size_t arg1) {
     s32 ret;
 
-    bzero(D_8004FF60, 0x7800);
-    ret = expand_gzip(arg0, D_8004FF60, arg1, 0x7800);
+    bzero(imgBuffer, 0x7800);
+    ret = expand_gzip(arg0, imgBuffer, arg1, 0x7800);
     if (ret > 0) {
-        func_800040EC(&D_80057768);
+        sa1RenderImage(&gfxPool);
     }
     return ret;
 }

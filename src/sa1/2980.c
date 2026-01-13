@@ -6,7 +6,7 @@
 
 void __osBbDelay(u32);
 
-void func_80003980(void) {
+void sa1TestVIBuffer(void) {
     u32 saveCtrl = IO_READ(VI_CONTROL_REG);
 
     IO_WRITE(VI_CONTROL_REG, VI_CTRL_TEST_ENABLE | VI_CTRL_KILL_WE);
@@ -26,7 +26,7 @@ void func_80003980(void) {
     IO_WRITE(VI_CONTROL_REG, saveCtrl);
 }
 
-s32 func_800039DC(void) {
+s32 sa1CheckVIBuffer(void) {
     u32 saveCtrl = IO_READ(VI_CONTROL_REG);
     u32 data;
 
@@ -43,11 +43,11 @@ s32 func_800039DC(void) {
     return FALSE;
 }
 
-s32 func_80003A28(void* arg0) {
+s32 sa1ConfigureVI(void* framebuffer) {
     s32 i = 0;
     u32 saveMask = __osDisableInt();
 
-    bzero(arg0, 0x1900);
+    bzero(framebuffer, 0x1900);
 
     do {
         u32 temp;
@@ -59,7 +59,7 @@ s32 func_80003A28(void* arg0) {
         __osBbDelay(1);
         IO_WRITE(MI_30_REG, temp | 0x02000000);
 
-        IO_WRITE(VI_ORIGIN_REG, arg0);
+        IO_WRITE(VI_ORIGIN_REG, framebuffer);
 
         // NTSC LAN1 configuration
         IO_WRITE(VI_WIDTH_REG, 320);
@@ -74,7 +74,7 @@ s32 func_80003A28(void* arg0) {
         IO_WRITE(VI_X_SCALE_REG, 0x200);
         IO_WRITE(VI_Y_SCALE_REG, 0x400);
 
-        func_80003980();
+        sa1TestVIBuffer();
 
         IO_WRITE(VI_CURRENT_REG, 0);
 
@@ -86,7 +86,7 @@ s32 func_80003A28(void* arg0) {
         }
 
         i++;
-    } while (func_800039DC());
+    } while (sa1CheckVIBuffer());
 
     IO_WRITE(VI_H_START_REG, 0);
 

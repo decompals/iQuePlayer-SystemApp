@@ -6,6 +6,7 @@
 #include "include_asm.h"
 
 s32 skGetId(BbId* bbId);
+s32 skSignHash(BbShaHash* hash, BbEccSig* outSignature);
 
 void osBbSetErrorLed(s32);
 void __osBbDelay(u32);
@@ -26,64 +27,62 @@ void osBbRtcInit(void);
 void osBbRtcSet(u8 year, u8 month, u8 day, u8 dow, u8 hour, u8 min, u8 sec);
 void osBbRtcGet(u8* year, u8* month, u8* day, u8* dow, u8* hour, u8* min, u8* sec);
 
-s32 skSignHash(BbShaHash* hash, BbEccSig* outSignature);
-
-extern OSThread D_80047DB0;
-extern s32 D_800163C4;
-extern u8 D_80047F60[0x8000];
-extern OSMesgQueue D_800C9C28;
-extern OSMesg D_8001AEB0;
-extern OSBbFs D_80037CA0;
-extern u8 D_8003FCA0[0x4000];
-extern s8* D_800163C8;
-extern s32 D_8001AE38; // card changed
-extern s32 D_8001AEC4;
-extern u32 D_8001AEC8;
-extern OSBbFs D_80037CA0;
-extern u8 D_8003FCA0[0x4000];
-extern u8 D_80043CA0[0x4000];
-extern u8 D_80047CA0[0x10];
-extern u8 D_80047CB0[0x100];
 extern s32 __osBbIsBb;
 
-void func_80002F40(u32 delay) {
+extern OSThread ledThread;
+extern OSMesgQueue ledTimerQueue;
+extern OSMesg ledTimerMsgBuf;
+
+extern s32 ledThreadNeedsInit; // = TRUE
+extern u8 ledThreadStack[0x8000];
+extern OSBbFs bbfs;
+extern u8 blockData[0x4000];
+extern u8 spareData[0x10];
+extern s32 cardPresent;
+extern s32 cardChanged;
+extern u32 sequenceNumber;
+extern u8 blockStats[0x4000];
+extern char fileName[0x100];
+extern s8* D_800163C8;
+
+void sa1LEDBlinkOnce(u32 delay) {
     osBbSetErrorLed(1);
     __osBbDelay(delay);
     osBbSetErrorLed(0);
     __osBbDelay(delay);
 }
 
-void func_80002F80(void* arg) {
+void sa1LEDThread(void* arg) {
     OSTimer timer;
-    s32 var_s1 = 1;
+    s32 ledState = 1;
 
     while (TRUE) {
-        osBbSetErrorLed(var_s1);
-        osSetTimer(&timer, 23437500, 0, &D_800C9C28, NULL);
-        osRecvMesg(&D_800C9C28, NULL, OS_MESG_BLOCK);
-        var_s1 ^= 1;
+        osBbSetErrorLed(ledState);
+        osSetTimer(&timer, OS_USEC_TO_CYCLES(500000), 0, &ledTimerQueue, NULL);
+        osRecvMesg(&ledTimerQueue, NULL, OS_MESG_BLOCK);
+        ledState ^= 1;
     }
 }
 
-void func_80002FE8(void) {
-    if (D_800163C4 != 0) {
-        osCreateMesgQueue(&D_800C9C28, &D_8001AEB0, 1);
-        osCreateThread(&D_80047DB0, 9, func_80002F80, NULL, D_80047F60 + sizeof(D_80047F60), 9);
-        D_800163C4 = 0;
+void sa1LEDThreadStart(void) {
+    if (ledThreadNeedsInit) {
+        osCreateMesgQueue(&ledTimerQueue, &ledTimerMsgBuf, 1);
+        osCreateThread(&ledThread, 9, sa1LEDThread, NULL, ledThreadStack + sizeof(ledThreadStack), 9);
+        ledThreadNeedsInit = FALSE;
     }
-    osStartThread(&D_80047DB0);
+    osStartThread(&ledThread);
 }
 
-void func_80003068(void) {
-    osStopThread(&D_80047DB0);
+void sa1LEDThreadStop(void) {
+    osStopThread(&ledThread);
     osBbSetErrorLed(0);
 }
 
-s32 func_80003094(void) {
-    char sp10[9] = "temp.tmp";
-    char sp20[7] = "id.sys";
+s32 sa1CheckIdSys(void) {
+    char temptmp[9] = "temp.tmp";
+    char idsys[7] = "id.sys";
     BbId bbId;
-    s32 temp_s0;
+    u32 savedBbId;
     s32 fd;
     s32 ret;
 
@@ -93,53 +92,61 @@ s32 func_80003094(void) {
         goto end;
     }
 
-    if (osBbFInit(&D_80037CA0) < 0) {
+    if (osBbFInit(&bbfs) < 0) {
         ret = -2;
         goto end;
     }
 
-    bzero(D_8003FCA0, sizeof(D_8003FCA0));
+    bzero(blockData, sizeof(blockData));
 
-    fd = osBbFOpen(sp20, "r");
+    fd = osBbFOpen(idsys, "r");
     if (fd >= 0) {
-        if (osBbFRead(fd, 0, &D_8003FCA0, sizeof(D_8003FCA0)) < 0) {
+        // id.sys exists ..
+        if (osBbFRead(fd, 0, blockData, sizeof(blockData)) < 0) {
+            // .. but cannot be read?
             osBbFClose(fd);
             ret = -2;
         } else {
-            temp_s0 = *(u32*)&D_8003FCA0[0];
+            // .. check that the saved bbid is the same
+            savedBbId = *(u32*)&blockData[0];
 
             osBbFClose(fd);
 
-            if (bbId != temp_s0) {
+            if (bbId != savedBbId) {
                 ret = -3;
             }
         }
     } else if (fd == -8) {
-        bcopy(&bbId, &D_8003FCA0, sizeof(bbId));
-        osBbFDelete(sp10);
-        osBbFCreate(sp10, 1, sizeof(D_8003FCA0));
+        // id.sys does not exist, create temp.tmp
+        bcopy(&bbId, blockData, sizeof(bbId));
+        osBbFDelete(temptmp);
+        osBbFCreate(temptmp, 1, sizeof(blockData));
 
-        fd = osBbFOpen(sp10, "w");
+        // Open the created file
+        fd = osBbFOpen(temptmp, "w");
         if (fd < 0) {
             ret = -2;
         } else {
-            if (osBbFWrite(fd, 0, &D_8003FCA0, sizeof(D_8003FCA0)) < 0) {
+            // Write the bbid
+            if (osBbFWrite(fd, 0, blockData, sizeof(blockData)) < 0) {
                 osBbFClose(fd);
-                osBbFDelete(sp10);
+                osBbFDelete(temptmp);
                 ret = -2;
             }
 
+            // Rename temp.tmp to id.sys
             osBbFClose(fd);
-            osBbFRename(sp10, sp20);
+            osBbFRename(temptmp, idsys);
         }
     } else {
+        // Other error when trying to open id.sys
         ret = -2;
     }
 end:
     return ret;
 }
 
-u32 func_8000328C(u8* data, s32 size, u32 initVal) {
+u32 sa1CalcChecksum(u8* data, s32 size, u32 initVal) {
     u32 csum = initVal;
     s32 i;
 
@@ -150,7 +157,7 @@ u32 func_8000328C(u8* data, s32 size, u32 initVal) {
 }
 
 // calculate checksum of "size" bytes of "fileName"
-s32 func_800032B8(const char* fileName, u32 size, u32 expectedChksum) {
+s32 sa1VerifyChecksum(const char* fileName, u32 size, u32 expectedChksum) {
     OSBbStatBuf sb;
     s32 fd;
     s32 offset;
@@ -170,25 +177,25 @@ s32 func_800032B8(const char* fileName, u32 size, u32 expectedChksum) {
     }
 
     remaining = size;
-    if (sb.size < remaining) {
+    if ((u32)remaining > sb.size) {
         remaining = sb.size;
     }
 
     offset = 0;
     while (remaining > 0) {
-        bzero(D_8003FCA0, sizeof(D_8003FCA0));
-        osInvalDCache(&D_8003FCA0, sizeof(D_8003FCA0));
+        bzero(blockData, sizeof(blockData));
+        osInvalDCache(&blockData, sizeof(blockData));
         blockSize = remaining;
-        if (blockSize > sizeof(D_8003FCA0)) {
-            blockSize = sizeof(D_8003FCA0);
+        if (blockSize > sizeof(blockData)) {
+            blockSize = sizeof(blockData);
         }
-        ret = osBbFRead(fd, offset, &D_8003FCA0, sizeof(D_8003FCA0));
+        ret = osBbFRead(fd, offset, &blockData, sizeof(blockData));
         if (ret < 0) {
             return ret;
         }
         remaining -= blockSize;
-        offset += sizeof(D_8003FCA0);
-        computedChksum = func_8000328C(D_8003FCA0, (s32)blockSize, computedChksum);
+        offset += sizeof(blockData);
+        computedChksum = sa1CalcChecksum(blockData, (s32)blockSize, computedChksum);
     }
 
     return (expectedChksum == computedChksum) ? 0 : -1;
@@ -215,14 +222,14 @@ typedef enum {
     CMD_SIGN_HASH = 0x20,
 } CmdId;
 
-void func_800033CC(void) {
+void sa1CommandLoop(void) {
     u32 dataIn[2];
     u32 dataOut[2];
     u32 status[2];
     BbShaHash hash;
     BbEccSig eccSig;
 
-    s32 numBlocks;
+    u32 numBlocks;
     u32 regVal;
     void* sparePtr;
     u32 ledValue;
@@ -250,16 +257,16 @@ void func_800033CC(void) {
         if (__osBbIsBb) {
             osBbRtcInit();
             osBbCardInit();
-            ret = osBbFInit(&D_80037CA0);
+            ret = osBbFInit(&bbfs);
         }
     }
 
-    D_8001AE38 = osBbCardClearChange();
-    func_80002F40(100000);
+    cardPresent = osBbCardClearChange();
+    sa1LEDBlinkOnce(100000);
 
     while (1) {
         if (ret < 0) {
-            func_80003068();
+            sa1LEDThreadStop();
         }
 
         ret = osBbReadHost(dataIn, sizeof(dataIn));
@@ -268,11 +275,11 @@ void func_800033CC(void) {
         }
 
         osBbCardStatus(0, (u8*)status);
-        D_8001AEC4 = osBbCardChange();
-        if (D_8001AEC4 != 0) {
-            D_8001AEC8 = 0;
-            D_8001AE38 = osBbCardClearChange();
-            if (D_8001AE38) {
+        cardChanged = osBbCardChange();
+        if (cardChanged) {
+            sequenceNumber = 0;
+            cardPresent = osBbCardClearChange();
+            if (cardPresent) {
                 osBbCardInit();
             }
         }
@@ -284,24 +291,24 @@ void func_800033CC(void) {
         switch (dataIn[0]) {
             case CMD_FILE_CHECKSUM:
                 length = (dataIn[1] + 3) & ~3;
-                if (length > sizeof(D_80047CB0)) {
-                    length = sizeof(D_80047CB0);
+                if (length > sizeof(fileName)) {
+                    length = sizeof(fileName);
                 }
-                ret = osBbReadHost(D_80047CB0, length);
+                ret = osBbReadHost(fileName, length);
                 if (ret < 0) {
                     break;
                 }
-                D_80047CB0[0xFF] = 0;
+                fileName[255] = '\0';
                 ret = osBbReadHost(dataIn, sizeof(dataIn));
                 if (ret < 0) {
                     break;
                 }
-                dataOut[1] = func_800032B8(D_80047CB0, dataIn[1], dataIn[0]);
+                dataOut[1] = sa1VerifyChecksum(fileName, dataIn[1], dataIn[0]);
                 ret = osBbWriteHost(dataOut, sizeof(dataOut));
                 break;
 
             case CMD_SET_LED:
-                func_80003068();
+                sa1LEDThreadStop();
                 ledValue = dataIn[1] & 3;
                 if (ledValue < 2) {
                     osBbSetErrorLed(0);
@@ -312,7 +319,7 @@ void func_800033CC(void) {
                 } else if (ledValue != 3) {
                     dataOut[1] = 0;
                 } else {
-                    func_80002FE8();
+                    sa1LEDThreadStart();
                     dataOut[1] = 0;
                 }
                 ret = osBbWriteHost(dataOut, sizeof(dataOut));
@@ -343,37 +350,37 @@ void func_800033CC(void) {
                 break;
 
             case CMD_WRITE_BLOCK_WITH_SPARE:
-                sparePtr = D_80047CA0;
+                sparePtr = spareData;
             case CMD_WRITE_BLOCK:
-                ret = osBbReadHost(D_8003FCA0, sizeof(D_8003FCA0));
+                ret = osBbReadHost(blockData, sizeof(blockData));
                 if (ret < 0) {
                     break;
                 }
                 if (sparePtr != NULL) {
-                    ret = osBbReadHost(D_80047CA0, sizeof(D_80047CA0));
+                    ret = osBbReadHost(spareData, sizeof(spareData));
                     if (ret < 0) {
                         break;
                     }
                 }
                 osBbCardEraseBlock(0, dataIn[1]);
-                dataOut[1] = osBbCardWriteBlock(0, dataIn[1], D_8003FCA0, sparePtr);
+                dataOut[1] = osBbCardWriteBlock(0, dataIn[1], blockData, sparePtr);
                 ret = osBbWriteHost(dataOut, sizeof(dataOut));
                 break;
 
             case CMD_READ_BLOCK_WITH_SPARE:
-                sparePtr = D_80047CA0;
+                sparePtr = spareData;
             case CMD_READ_BLOCK:
-                dataOut[1] = osBbCardReadBlock(0, dataIn[1], D_8003FCA0, D_80047CA0);
+                dataOut[1] = osBbCardReadBlock(0, dataIn[1], blockData, spareData);
                 ret = osBbWriteHost(dataOut, sizeof(dataOut));
                 if (ret < 0) {
                     break;
                 }
-                ret = osBbWriteHost(D_8003FCA0, sizeof(D_8003FCA0));
+                ret = osBbWriteHost(blockData, sizeof(blockData));
                 if (ret < 0) {
                     break;
                 }
                 if (sparePtr != NULL) {
-                    ret = osBbWriteHost(D_80047CA0, sizeof(D_80047CA0));
+                    ret = osBbWriteHost(spareData, sizeof(spareData));
                 }
                 break;
 
@@ -381,20 +388,20 @@ void func_800033CC(void) {
                 numBlocks = osBbCardBlocks(0);
 
                 for (n = 0; n < numBlocks; n++) {
-                    D_80047CA0[5] = 0xFF;
-                    osBbCardReadBlock(0, n, D_8003FCA0, D_80047CA0);
-                    D_80043CA0[n] = D_80047CA0[5] != 0xFF; // bad block indicator
+                    spareData[5] = 0xFF;
+                    osBbCardReadBlock(0, n, blockData, spareData);
+                    blockStats[n] = spareData[5] != 0xFF; // bad block indicator
                 }
                 dataOut[1] = n; // numBlocks
                 ret = osBbWriteHost(dataOut, sizeof(dataOut));
                 if (ret < 0) {
                     break;
                 }
-                ret = osBbWriteHost(D_80043CA0, n);
+                ret = osBbWriteHost(blockStats, n);
                 break;
 
             case CMD_INIT_FS:
-                dataOut[1] = osBbFInit(&D_80037CA0);
+                dataOut[1] = osBbFInit(&bbfs);
                 ret = osBbWriteHost(dataOut, sizeof(dataOut));
                 break;
 
@@ -404,15 +411,15 @@ void func_800033CC(void) {
                 break;
 
             case CMD_SET_SEQ_NUM:
-                dataOut[1] = D_8001AEC8 = D_8001AE38 ? dataIn[1] : 0;
+                dataOut[1] = sequenceNumber = cardPresent ? dataIn[1] : 0;
                 ret = osBbWriteHost(dataOut, sizeof(dataOut));
                 break;
 
             case CMD_GET_SEQ_NUM:
-                if (!D_8001AE38) {
+                if (!cardPresent) {
                     dataOut[1] = -1;
                 } else {
-                    dataOut[1] = D_8001AEC8;
+                    dataOut[1] = sequenceNumber;
                 }
                 ret = osBbWriteHost(dataOut, sizeof(dataOut));
                 break;
@@ -448,7 +455,7 @@ void func_800033CC(void) {
 
                 while ((s32)n > 0) {
                     remaining = MIN(n, 0x4000);
-                    ret = osBbReadHost(D_8003FCA0, remaining);
+                    ret = osBbReadHost(blockData, remaining);
                     if (ret < 0) {
                         break;
                     }
