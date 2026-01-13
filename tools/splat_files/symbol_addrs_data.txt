@@ -1,10 +1,10 @@
 
 // asm/data/15490.data.s
 
-D_80016490 = 0x80016490;
-D_800164A0 = 0x800164A0; // dont_allow_addend:True
-D_800178A0 = 0x800178A0;
-D_800178B0 = 0x800178B0; // dont_allow_addend:True
+sa1Image1Size = 0x80016490;
+sa1Image1Data = 0x800164A0; // dont_allow_addend:True
+sa1Image2Size = 0x800178A0;
+sa1Image2Data = 0x800178B0; // dont_allow_addend:True
 
 
 // asm/data/libultra/vi/vimgr.data.s
@@ -182,25 +182,25 @@ osViModeNtscLpn1 = 0x800191C0; // type:label size:0x50
 
 // asm/data/sa1/1F40.data.s
 
-D_800163B0 = 0x800163B0; // type:label size:17
-D_800163C4 = 0x800163C4; // type:label size:4
+sa1BuildDate = 0x800163B0; // type:label size:18
+ledThreadNeedsInit = 0x800163C4; // type:label size:4
 D_800163C8 = 0x800163C8; // type:label size:4
 
 
 // asm/data/sa1/1050.data.s
 
-D_80016390 = 0x80016390; // type:label size:4
-D_80016394 = 0x80016394; // type:label size:4
-D_80016398 = 0x80016398; // type:label size:4
-D_8001639C = 0x8001639C; // type:label size:4
-D_800163A0 = 0x800163A0; // type:label size:4
+usbTypeA = 0x80016390; // type:label size:4
+usbLineUnstable = 0x80016394; // type:label size:4
+usbNum = 0x80016398; // type:label size:4
+usbNotConnected = 0x8001639C; // type:label size:4
+powerBtnPressed = 0x800163A0; // type:label size:4
 
 
 // asm/data/sa1/2C20.data.s
 
-D_800163D0 = 0x800163D0; // type:label size:0x10
-D_800163E0 = 0x800163E0; // type:label size:0x28
-D_80016408 = 0x80016408; // type:label size:0x88
+viewport = 0x800163D0; // type:label size:0x10
+rspInitDL = 0x800163E0; // type:label size:0x28
+rdpInitDL = 0x80016408; // type:label size:0x88
 
 // asm/data/rsp/gspFast3D.data.s
 

@@ -783,53 +783,53 @@ SHA1Result = 0x800120C0; // type:func
 
 // src/sa1/1F40.c
 
-func_80002F40 = 0x80002F40; // type:func
-func_80002F80 = 0x80002F80; // type:func
-func_80002FE8 = 0x80002FE8; // type:func
-func_80003068 = 0x80003068; // type:func
-func_80003094 = 0x80003094; // type:func
-func_8000328C = 0x8000328C; // type:func
-func_800032B8 = 0x800032B8; // type:func
-func_800033CC = 0x800033CC; // type:func
+sa1LEDBlinkOnce = 0x80002F40; // type:func
+sa1LEDThread = 0x80002F80; // type:func
+sa1LEDThreadStart = 0x80002FE8; // type:func
+sa1LEDThreadStop = 0x80003068; // type:func
+sa1CheckIdSys = 0x80003094; // type:func
+sa1CalcChecksum = 0x8000328C; // type:func
+sa1VerifyChecksum = 0x800032B8; // type:func
+sa1CommandLoop = 0x800033CC; // type:func
 
 
 // src/sa1/2C20.c
 
-func_80003C20 = 0x80003C20; // type:func
-func_80003C7C = 0x80003C7C; // type:func
-func_800040EC = 0x800040EC; // type:func
-func_80004390 = 0x80004390; // type:func
+sa1InitRDP = 0x80003C20; // type:func
+sa1BuildImageDL = 0x80003C7C; // type:func
+sa1RenderImage = 0x800040EC; // type:func
+sa1DisplayImage = 0x80004390; // type:func
 
 
 // src/sa1/1050.c
 
-func_80002050 = 0x80002050; // type:func
-func_80002114 = 0x80002114; // type:func
-func_800021C8 = 0x800021C8; // type:func
-func_80002248 = 0x80002248; // type:func
-func_80002320 = 0x80002320; // type:func
-func_8000234C = 0x8000234C; // type:func
+sa1Setup = 0x80002050; // type:func
+sa1Entrypoint = 0x80002114; // type:func
+sa1Event = 0x800021C8; // type:func
+sa1IdleThread = 0x80002248; // type:func
+sa1EventThread = 0x80002320; // type:func
+sa1MainThread = 0x8000234C; // type:func
 
 // src/sa1/17A0.c
 
-func_800027A0 = 0x800027A0; // type:func
-func_80002838 = 0x80002838; // type:func
-func_80002860 = 0x80002860; // type:func
-func_800028FC = 0x800028FC; // type:func
-func_80002950 = 0x80002950; // type:func
-func_800029CC = 0x800029CC; // type:func
-func_80002ABC = 0x80002ABC; // type:func
-func_80002BF8 = 0x80002BF8; // type:func
-func_80002CB0 = 0x80002CB0; // type:func
-func_80002D94 = 0x80002D94; // type:func
-func_80002DCC = 0x80002DCC; // type:func
+sa1CardReadPage = 0x800027A0; // type:func
+sa1NextGoodBlock = 0x80002838; // type:func
+sa1CardReadBlock = 0x80002860; // type:func
+sa1SkipBlocks = 0x800028FC; // type:func
+sa1CheckHash = 0x80002950; // type:func
+sa1VerifyCMD = 0x800029CC; // type:func
+sa1LoadAndCheckSA2 = 0x80002ABC; // type:func
+sa1LoadAndDecompressSA2 = 0x80002BF8; // type:func
+sa1ReadAndVerifyCMD = 0x80002CB0; // type:func
+sa1BootSA2 = 0x80002D94; // type:func
+sa1AuthenticateAndLoadSA2 = 0x80002DCC; // type:func
 
 
 // src/sa1/2980.c
 
-func_80003980 = 0x80003980; // type:func
-func_800039DC = 0x800039DC; // type:func
-func_80003A28 = 0x80003A28; // type:func
+sa1TestVIBuffer = 0x80003980; // type:func
+sa1CheckVIBuffer = 0x800039DC; // type:func
+sa1ConfigureVI = 0x80003A28; // type:func
 
 
 // src/libz/zutil.c
